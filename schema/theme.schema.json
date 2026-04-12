@@ -1,0 +1,98 @@
+{
+  "title": "JTOX Theme Metadata",
+  "description": "Schema for theme.json — the root metadata file of a JTOX theme",
+  "type": "object",
+  "required": ["$jtox", "name", "version", "settings", "defaultLayout", "defaultHeader", "defaultFooter", "pages"],
+  "properties": {
+    "$jtox": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$",
+      "description": "JTOX spec version this theme targets"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Theme identifier (lowercase-with-hyphens)"
+    },
+    "displayName": { "type": "string" },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+",
+      "description": "Theme version (semver)"
+    },
+    "description": { "type": "string" },
+    "author": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "url": { "type": "string" },
+        "email": { "type": "string" }
+      }
+    },
+    "license": { "type": "string" },
+    "preview": {
+      "type": "object",
+      "properties": {
+        "desktop": { "type": "string" },
+        "mobile": { "type": "string" },
+        "thumbnail": { "type": "string" }
+      }
+    },
+    "presets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "settings": { "type": "object" },
+          "preview": { "type": "string" }
+        }
+      }
+    },
+    "settings": {
+      "type": "object",
+      "description": "Global theme settings organized by group"
+    },
+    "settingGroups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label"],
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string" },
+          "icon": { "type": "string" }
+        }
+      }
+    },
+    "defaultLayout": {
+      "type": "string",
+      "description": "$ref path to the default layout template"
+    },
+    "defaultHeader": {
+      "type": "string",
+      "description": "$ref path to the default header template"
+    },
+    "defaultFooter": {
+      "type": "string",
+      "description": "$ref path to the default footer template"
+    },
+    "pages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "path"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "path": { "type": "string" }
+        }
+      },
+      "minItems": 1,
+      "description": "Available page templates"
+    }
+  }
+}

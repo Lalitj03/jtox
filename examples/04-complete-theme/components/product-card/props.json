@@ -1,0 +1,13 @@
+{
+  "product": {
+    "type": "object",
+    "required": true,
+    "description": "Product data",
+    "properties": {
+      "title": { "type": "string" },
+      "price": { "type": "string" },
+      "image_url": { "type": "string" },
+      "url": { "type": "string" }
+    }
+  }
+}

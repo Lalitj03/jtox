@@ -1,0 +1,75 @@
+{
+  "title": {
+    "type": "text",
+    "intent": "data",
+    "label": "Title",
+    "description": "The main heading of the hero banner",
+    "value": "Welcome to Our Store",
+    "maxLength": 100,
+    "group": "content"
+  },
+  "subtitle": {
+    "type": "textarea",
+    "intent": "data",
+    "label": "Subtitle",
+    "description": "Supporting text below the title",
+    "value": "Discover our latest collection",
+    "maxLength": 200,
+    "group": "content"
+  },
+  "show_cta": {
+    "type": "boolean",
+    "intent": "data",
+    "label": "Show Button",
+    "value": true,
+    "group": "content"
+  },
+  "cta_text": {
+    "type": "text",
+    "intent": "data",
+    "label": "Button Text",
+    "value": "Shop Now",
+    "maxLength": 30,
+    "group": "content"
+  },
+  "cta_url": {
+    "type": "url",
+    "intent": "data",
+    "label": "Button Link",
+    "value": "/products",
+    "group": "content"
+  },
+  "background_color": {
+    "type": "color",
+    "intent": "style",
+    "label": "Background Color",
+    "value": "#1e293b",
+    "group": "appearance"
+  },
+  "text_color": {
+    "type": "color",
+    "intent": "style",
+    "label": "Text Color",
+    "value": "#ffffff",
+    "group": "appearance"
+  },
+  "background_image": {
+    "type": "image",
+    "intent": "style",
+    "label": "Background Image",
+    "value": null,
+    "accept": ["image/jpeg", "image/png", "image/webp"],
+    "group": "appearance"
+  },
+  "min_height": {
+    "type": "range",
+    "intent": "style",
+    "label": "Minimum Height",
+    "value": 500,
+    "min": 200,
+    "max": 900,
+    "step": 50,
+    "unit": "px",
+    "group": "appearance"
+  }
+}

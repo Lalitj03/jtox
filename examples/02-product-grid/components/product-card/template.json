@@ -1,0 +1,110 @@
+{
+  "$jtox": "1.0",
+  "type": "fragment",
+  "meta": {
+    "id": "product-card",
+    "name": "Product Card",
+    "description": "A single product card with image, title, price, and sale badge"
+  },
+  "children": [
+    {
+      "type": "link",
+      "attributes": {
+        "href": { "$bind": "props.product.url", "default": "#" }
+      },
+      "styles": ["product-card"],
+      "children": [
+        {
+          "type": "container",
+          "styles": ["product-card-image-wrapper"],
+          "children": [
+            {
+              "type": "image",
+              "attributes": {
+                "src": { "$bind": "props.product.image_url" },
+                "alt": { "$bind": "props.product.title", "default": "Product image" },
+                "width": 400,
+                "height": 400
+              },
+              "styles": ["product-card-image"]
+            },
+            {
+              "type": "conditional",
+              "test": { "$bind": "props.show_sale_badge" },
+              "children": [
+                {
+                  "type": "conditional",
+                  "test": { "$bind": "props.product.on_sale" },
+                  "children": [
+                    {
+                      "type": "span",
+                      "styles": ["sale-badge"],
+                      "children": [
+                        { "type": "text", "content": "Sale" }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "container",
+          "styles": ["product-card-body"],
+          "children": [
+            {
+              "type": "heading",
+              "level": 3,
+              "styles": ["product-card-title"],
+              "children": [
+                { "type": "text", "content": { "$bind": "props.product.title" } }
+              ]
+            },
+            {
+              "type": "conditional",
+              "test": { "$bind": "props.show_price" },
+              "children": [
+                {
+                  "type": "container",
+                  "styles": ["product-card-price"],
+                  "children": [
+                    {
+                      "type": "conditional",
+                      "test": { "$bind": "props.product.on_sale" },
+                      "children": [
+                        {
+                          "type": "span",
+                          "styles": ["price-original", "price-strikethrough"],
+                          "children": [
+                            { "type": "text", "content": { "$bind": "props.product.price" } }
+                          ]
+                        },
+                        {
+                          "type": "span",
+                          "styles": ["price-sale"],
+                          "children": [
+                            { "type": "text", "content": { "$bind": "props.product.sale_price" } }
+                          ]
+                        }
+                      ],
+                      "fallback": [
+                        {
+                          "type": "span",
+                          "styles": ["price-regular"],
+                          "children": [
+                            { "type": "text", "content": { "$bind": "props.product.price" } }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

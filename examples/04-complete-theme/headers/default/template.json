@@ -1,0 +1,13 @@
+{
+  "$jtox": "1.0",
+  "type": "header",
+  "meta": { "id": "default", "name": "Default Header" },
+  "styles": ["site-header"],
+  "allowedSections": ["/sections/main-nav"],
+  "defaultSections": [
+    { "ref": "/sections/main-nav", "static": true }
+  ],
+  "children": [
+    { "type": "slot", "name": "sections" }
+  ]
+}

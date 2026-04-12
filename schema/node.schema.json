@@ -1,0 +1,75 @@
+{
+  "title": "JTOX Node",
+  "description": "A single node in a JTOX document tree",
+  "type": "object",
+  "required": ["type"],
+  "properties": {
+    "$jtox": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$",
+      "description": "JTOX spec version (required on root nodes: section, page, header, footer, layout)"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "container", "heading", "paragraph", "span", "link", "button",
+        "image", "video", "icon",
+        "list", "listItem", "table", "tableRow", "tableCell",
+        "form", "input", "select", "textarea", "label",
+        "nav", "main", "aside", "article", "figure", "figCaption",
+        "separator", "fragment",
+        "text",
+        "component", "block",
+        "each", "conditional", "slot",
+        "section", "page", "header", "footer", "layout"
+      ],
+      "description": "The node type"
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "styles": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9/-]*$" },
+      "description": "Array of style identifiers"
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Key-value pairs passed to the rendered element"
+    },
+    "children": {
+      "type": "array",
+      "items": { "type": "object" },
+      "description": "Ordered array of child nodes"
+    },
+    "tag": {
+      "type": "string",
+      "description": "HTML tag override hint for web renderers"
+    },
+    "state": {
+      "type": "object",
+      "description": "Local UI state declaration. Each key is a state variable name.",
+      "patternProperties": {
+        "^[a-z][a-z0-9_]*$": {
+          "type": "object",
+          "required": ["type", "default"],
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["string", "number", "boolean"]
+            },
+            "default": {
+              "description": "Initial value (must match declared type)"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

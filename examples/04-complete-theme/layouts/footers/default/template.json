@@ -1,0 +1,25 @@
+{
+  "$jtox": "1.0",
+  "type": "section",
+  "meta": { "id": "default-footer", "name": "Default Footer" },
+  "placement": ["footer"],
+  "styles": ["site-footer-inner"],
+  "children": [
+    {
+      "type": "container",
+      "styles": ["footer-content", "centered"],
+      "children": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "content": { "$bind": "theme.brand.name", "default": "Store" }
+            },
+            { "type": "text", "content": " — Powered by JTOX" }
+          ]
+        }
+      ]
+    }
+  ]
+}

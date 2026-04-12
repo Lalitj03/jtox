@@ -1,0 +1,27 @@
+{
+  "product": {
+    "type": "object",
+    "required": true,
+    "description": "The product data to display",
+    "properties": {
+      "title": { "type": "string", "description": "Product name" },
+      "price": { "type": "string", "description": "Formatted price (e.g., '$29.99')" },
+      "sale_price": { "type": "string", "description": "Formatted sale price" },
+      "on_sale": { "type": "boolean", "description": "Whether the product is on sale" },
+      "image_url": { "type": "string", "description": "Product image URL" },
+      "url": { "type": "string", "description": "Product detail page URL" }
+    }
+  },
+  "show_price": {
+    "type": "boolean",
+    "required": false,
+    "default": true,
+    "description": "Whether to display the price"
+  },
+  "show_sale_badge": {
+    "type": "boolean",
+    "required": false,
+    "default": true,
+    "description": "Whether to show the sale badge overlay"
+  }
+}

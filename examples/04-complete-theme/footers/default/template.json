@@ -1,0 +1,12 @@
+{
+  "$jtox": "1.0",
+  "type": "footer",
+  "meta": { "id": "default", "name": "Default Footer" },
+  "styles": ["site-footer"],
+  "defaultSections": [
+    { "ref": "/sections/footer-content", "static": true }
+  ],
+  "children": [
+    { "type": "slot", "name": "sections" }
+  ]
+}

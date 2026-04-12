@@ -1,0 +1,26 @@
+{
+  "$jtox": "1.0",
+  "type": "page",
+  "meta": {
+    "id": "home",
+    "name": "Home Page"
+  },
+  "allowedSections": [
+    "/sections/hero-banner",
+    "/sections/product-grid",
+    "/sections/testimonials",
+    "/sections/newsletter-signup",
+    "/sections/rich-text"
+  ],
+  "sectionRules": [
+    {
+      "rule": "maxCount",
+      "section": "/sections/hero-banner",
+      "max": 1,
+      "description": "Only one hero banner per page"
+    }
+  ],
+  "children": [
+    { "type": "slot", "name": "sections" }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "$jtox": "1.0",
+  "type": "fragment",
+  "meta": { "id": "product-card", "name": "Product Card" },
+  "children": [
+    {
+      "type": "link",
+      "attributes": { "href": { "$bind": "props.product.url" } },
+      "styles": ["product-card"],
+      "children": [
+        {
+          "type": "image",
+          "attributes": {
+            "src": { "$bind": "props.product.image_url" },
+            "alt": { "$bind": "props.product.title" }
+          },
+          "styles": ["product-card-image"]
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "styles": ["product-card-title"],
+          "children": [
+            { "type": "text", "content": { "$bind": "props.product.title" } }
+          ]
+        },
+        {
+          "type": "span",
+          "styles": ["product-card-price"],
+          "children": [
+            { "type": "text", "content": { "$bind": "props.product.price" } }
+          ]
+        }
+      ]
+    }
+  ]
+}

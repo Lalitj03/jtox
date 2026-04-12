@@ -1,0 +1,59 @@
+{
+  "$jtox": "1.0",
+  "type": "section",
+  "meta": {
+    "id": "hero-banner",
+    "name": "Hero Banner",
+    "description": "A full-width hero section with title, subtitle, and call-to-action"
+  },
+  "placement": ["page"],
+  "styles": ["hero-section"],
+  "children": [
+    {
+      "type": "container",
+      "styles": ["hero-content", "centered"],
+      "children": [
+        {
+          "type": "heading",
+          "level": 1,
+          "styles": ["hero-title"],
+          "children": [
+            {
+              "type": "text",
+              "content": { "$bind": "settings.title", "default": "Welcome to Our Store" }
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "styles": ["hero-subtitle"],
+          "children": [
+            {
+              "type": "text",
+              "content": { "$bind": "settings.subtitle", "default": "Discover our latest collection" }
+            }
+          ]
+        },
+        {
+          "type": "conditional",
+          "test": { "$bind": "settings.show_cta" },
+          "children": [
+            {
+              "type": "link",
+              "attributes": {
+                "href": { "$bind": "settings.cta_url", "default": "/products" }
+              },
+              "styles": ["button", "button-primary", "button-large"],
+              "children": [
+                {
+                  "type": "text",
+                  "content": { "$bind": "settings.cta_text", "default": "Shop Now" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

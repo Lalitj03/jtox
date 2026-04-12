@@ -1,0 +1,189 @@
+{
+  "title": "JTOX Settings Schema",
+  "description": "Schema for a JTOX settings file (section, component, or block settings)",
+  "type": "object",
+  "patternProperties": {
+    "^[a-z][a-z0-9_]*$": {
+      "type": "object",
+      "required": ["type", "intent", "label", "value"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "text", "textarea", "number", "range", "color",
+            "select", "boolean", "image", "url", "richtext", "datasource", "list"
+          ]
+        },
+        "intent": {
+          "type": "string",
+          "enum": ["style", "data"]
+        },
+        "label": { "type": "string" },
+        "description": { "type": "string" },
+        "value": {},
+        "required": { "type": "boolean" },
+        "group": { "type": "string" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "type": { "const": "text" } } },
+          "then": {
+            "properties": {
+              "maxLength": { "type": "integer", "minimum": 1 },
+              "minLength": { "type": "integer", "minimum": 0 },
+              "placeholder": { "type": "string" },
+              "pattern": { "type": "string" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "textarea" } } },
+          "then": {
+            "properties": {
+              "maxLength": { "type": "integer", "minimum": 1 },
+              "rows": { "type": "integer", "minimum": 1 }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "type": { "enum": ["number", "range"] } } },
+          "then": {
+            "properties": {
+              "min": { "type": "number" },
+              "max": { "type": "number" },
+              "step": { "type": "number" },
+              "unit": { "type": "string" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "color" } } },
+          "then": {
+            "properties": {
+              "format": { "type": "string", "enum": ["hex", "rgb", "hsl"] },
+              "alpha": { "type": "boolean" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "select" } } },
+          "then": {
+            "required": ["type", "intent", "label", "value", "options"],
+            "properties": {
+              "options": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["label", "value"],
+                  "properties": {
+                    "label": { "type": "string" },
+                    "value": { "type": "string" }
+                  }
+                },
+                "minItems": 1
+              },
+              "multiple": { "type": "boolean" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "image" } } },
+          "then": {
+            "properties": {
+              "accept": { "type": "array", "items": { "type": "string" } },
+              "maxSize": { "type": "integer" },
+              "dimensions": {
+                "type": "object",
+                "properties": {
+                  "minWidth": { "type": "integer" },
+                  "maxWidth": { "type": "integer" },
+                  "minHeight": { "type": "integer" },
+                  "maxHeight": { "type": "integer" },
+                  "aspectRatio": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "url" } } },
+          "then": {
+            "properties": {
+              "allowExternal": { "type": "boolean" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "richtext" } } },
+          "then": {
+            "properties": {
+              "format": {
+                "type": "string",
+                "enum": ["plain", "html", "slate", "markdown", "prosemirror"],
+                "default": "plain"
+              },
+              "allowedFormats": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": ["bold", "italic", "underline", "strikethrough", "link", "list", "code"]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "datasource" } } },
+          "then": {
+            "required": ["type", "intent", "label", "value", "sourceType"],
+            "properties": {
+              "sourceType": { "type": "string", "enum": ["collection", "single", "query"] },
+              "entityTypes": {
+                "type": "array",
+                "items": { "type": "string", "enum": ["product", "content", "custom"] }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "list" } } },
+          "then": {
+            "required": ["type", "intent", "label", "value", "itemSchema"],
+            "properties": {
+              "intent": { "const": "data" },
+              "value": { "type": "array" },
+              "min": { "type": "integer", "minimum": 0 },
+              "max": { "type": "integer", "minimum": 1 },
+              "itemSchema": {
+                "type": "object",
+                "description": "A settings schema defining the fields for each list item. Supports all setting types except list (no nesting).",
+                "patternProperties": {
+                  "^[a-z][a-z0-9_]*$": {
+                    "type": "object",
+                    "required": ["type", "intent", "label", "value"],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "text", "textarea", "number", "range", "color",
+                          "select", "boolean", "image", "url", "richtext", "datasource"
+                        ]
+                      },
+                      "intent": { "type": "string", "enum": ["style", "data"] },
+                      "label": { "type": "string" },
+                      "description": { "type": "string" },
+                      "value": {}
+                    }
+                  }
+                },
+                "additionalProperties": false,
+                "minProperties": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

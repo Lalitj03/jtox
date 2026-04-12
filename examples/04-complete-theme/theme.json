@@ -1,0 +1,36 @@
+{
+  "$jtox": "1.0",
+  "name": "starter",
+  "displayName": "Starter Theme",
+  "version": "1.0.0",
+  "description": "A minimal JTOX theme demonstrating the complete file structure",
+  "author": { "name": "JTOX Examples" },
+  "license": "MIT",
+  "presets": [
+    { "id": "default", "name": "Default", "description": "Clean light theme", "settings": {} },
+    { "id": "dark", "name": "Dark", "description": "Dark background with light text",
+      "settings": { "colors.background": "#0f172a", "colors.text": "#f1f5f9", "colors.primary": "#60a5fa" } }
+  ],
+  "settings": {
+    "colors": {
+      "primary": { "type": "color", "intent": "style", "label": "Primary Color", "value": "#3b82f6" },
+      "background": { "type": "color", "intent": "style", "label": "Background Color", "value": "#ffffff" },
+      "text": { "type": "color", "intent": "style", "label": "Text Color", "value": "#1e293b" }
+    },
+    "brand": {
+      "name": { "type": "text", "intent": "data", "label": "Store Name", "value": "My Store" },
+      "logo_url": { "type": "image", "intent": "data", "label": "Logo", "value": null }
+    }
+  },
+  "settingGroups": [
+    { "id": "colors", "label": "Colors" },
+    { "id": "brand", "label": "Brand" }
+  ],
+  "defaultLayout": "/layouts/default",
+  "defaultHeader": "/headers/default",
+  "defaultFooter": "/footers/default",
+  "pages": [
+    { "id": "home", "name": "Home", "path": "/pages/home" },
+    { "id": "product", "name": "Product", "path": "/pages/product" }
+  ]
+}

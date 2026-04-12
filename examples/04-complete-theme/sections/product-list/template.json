@@ -1,0 +1,39 @@
+{
+  "$jtox": "1.0",
+  "type": "section",
+  "meta": { "id": "product-list", "name": "Product List" },
+  "placement": ["page"],
+  "styles": ["product-list"],
+  "children": [
+    {
+      "type": "heading",
+      "level": 2,
+      "children": [
+        { "type": "text", "content": { "$bind": "settings.title", "default": "Products" } }
+      ]
+    },
+    {
+      "type": "each",
+      "source": { "$bind": "props.products" },
+      "as": "product",
+      "limit": { "$bind": "settings.max_items" },
+      "children": [
+        {
+          "type": "component",
+          "$ref": "/components/product-card",
+          "props": {
+            "product": { "$bind": "scope.product" }
+          }
+        }
+      ],
+      "empty": [
+        {
+          "type": "paragraph",
+          "children": [
+            { "type": "text", "content": "No products to display." }
+          ]
+        }
+      ]
+    }
+  ]
+}

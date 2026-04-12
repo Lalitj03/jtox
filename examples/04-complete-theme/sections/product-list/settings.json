@@ -1,0 +1,28 @@
+{
+  "title": {
+    "type": "text",
+    "intent": "data",
+    "label": "Section Title",
+    "value": "Featured Products",
+    "group": "content"
+  },
+  "collection": {
+    "type": "datasource",
+    "intent": "data",
+    "label": "Collection",
+    "value": null,
+    "sourceType": "collection",
+    "entityTypes": ["product"],
+    "group": "content"
+  },
+  "max_items": {
+    "type": "number",
+    "intent": "data",
+    "label": "Max Items",
+    "value": 8,
+    "min": 1,
+    "max": 24,
+    "step": 1,
+    "group": "behavior"
+  }
+}

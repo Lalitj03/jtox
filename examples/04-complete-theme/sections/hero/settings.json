@@ -1,0 +1,23 @@
+{
+  "title": {
+    "type": "text",
+    "intent": "data",
+    "label": "Title",
+    "value": "Welcome to Our Store",
+    "group": "content"
+  },
+  "description": {
+    "type": "textarea",
+    "intent": "data",
+    "label": "Description",
+    "value": "Discover amazing products",
+    "group": "content"
+  },
+  "bg_color": {
+    "type": "color",
+    "intent": "style",
+    "label": "Background",
+    "value": "#f8fafc",
+    "group": "appearance"
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "$jtox": "1.0",
+  "type": "section",
+  "meta": {
+    "id": "product-grid",
+    "name": "Product Grid",
+    "description": "Displays a grid of product cards from a collection data source"
+  },
+  "placement": ["page"],
+  "styles": ["product-grid-section"],
+  "children": [
+    {
+      "type": "container",
+      "styles": ["section-header"],
+      "children": [
+        {
+          "type": "heading",
+          "level": 2,
+          "children": [
+            { "type": "text", "content": { "$bind": "settings.title", "default": "Products" } }
+          ]
+        },
+        {
+          "type": "conditional",
+          "test": { "$bind": "settings.subtitle" },
+          "children": [
+            {
+              "type": "paragraph",
+              "styles": ["section-subtitle"],
+              "children": [
+                { "type": "text", "content": { "$bind": "settings.subtitle" } }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "container",
+      "styles": ["product-grid"],
+      "children": [
+        {
+          "type": "each",
+          "source": { "$bind": "props.products" },
+          "as": "product",
+          "limit": { "$bind": "settings.max_items" },
+          "children": [
+            {
+              "type": "component",
+              "$ref": "/components/product-card",
+              "props": {
+                "product": { "$bind": "scope.product" },
+                "show_price": { "$bind": "settings.show_price" },
+                "show_sale_badge": { "$bind": "settings.show_sale_badge" }
+              }
+            }
+          ],
+          "empty": [
+            {
+              "type": "container",
+              "styles": ["empty-state"],
+              "children": [
+                { "type": "text", "content": "No products found." }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "conditional",
+      "test": { "$bind": "settings.show_view_all" },
+      "children": [
+        {
+          "type": "container",
+          "styles": ["section-footer", "centered"],
+          "children": [
+            {
+              "type": "link",
+              "attributes": {
+                "href": { "$bind": "settings.view_all_url", "default": "/products" }
+              },
+              "styles": ["button", "button-secondary"],
+              "children": [
+                { "type": "text", "content": { "$bind": "settings.view_all_text", "default": "View All" } }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

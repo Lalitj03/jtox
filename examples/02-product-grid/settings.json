@@ -1,0 +1,104 @@
+{
+  "title": {
+    "type": "text",
+    "intent": "data",
+    "label": "Section Title",
+    "value": "Featured Products",
+    "maxLength": 100,
+    "group": "content"
+  },
+  "subtitle": {
+    "type": "text",
+    "intent": "data",
+    "label": "Subtitle",
+    "value": "",
+    "maxLength": 200,
+    "group": "content"
+  },
+  "collection": {
+    "type": "datasource",
+    "intent": "data",
+    "label": "Product Collection",
+    "value": null,
+    "sourceType": "collection",
+    "entityTypes": ["product"],
+    "group": "content"
+  },
+  "max_items": {
+    "type": "number",
+    "intent": "data",
+    "label": "Maximum Products",
+    "description": "How many products to display",
+    "value": 8,
+    "min": 1,
+    "max": 50,
+    "step": 1,
+    "group": "behavior"
+  },
+  "columns": {
+    "type": "select",
+    "intent": "style",
+    "label": "Columns",
+    "value": "4",
+    "options": [
+      { "label": "2 Columns", "value": "2" },
+      { "label": "3 Columns", "value": "3" },
+      { "label": "4 Columns", "value": "4" }
+    ],
+    "group": "appearance"
+  },
+  "show_price": {
+    "type": "boolean",
+    "intent": "data",
+    "label": "Show Price",
+    "value": true,
+    "group": "behavior"
+  },
+  "show_sale_badge": {
+    "type": "boolean",
+    "intent": "data",
+    "label": "Show Sale Badge",
+    "value": true,
+    "group": "behavior"
+  },
+  "show_view_all": {
+    "type": "boolean",
+    "intent": "data",
+    "label": "Show View All Button",
+    "value": true,
+    "group": "content"
+  },
+  "view_all_text": {
+    "type": "text",
+    "intent": "data",
+    "label": "View All Text",
+    "value": "View All Products",
+    "maxLength": 50,
+    "group": "content"
+  },
+  "view_all_url": {
+    "type": "url",
+    "intent": "data",
+    "label": "View All Link",
+    "value": "/products",
+    "group": "content"
+  },
+  "background_color": {
+    "type": "color",
+    "intent": "style",
+    "label": "Background Color",
+    "value": "#ffffff",
+    "group": "appearance"
+  },
+  "gap": {
+    "type": "range",
+    "intent": "style",
+    "label": "Card Spacing",
+    "value": 24,
+    "min": 8,
+    "max": 48,
+    "step": 4,
+    "unit": "px",
+    "group": "appearance"
+  }
+}

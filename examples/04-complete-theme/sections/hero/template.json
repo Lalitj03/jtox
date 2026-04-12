@@ -1,0 +1,22 @@
+{
+  "$jtox": "1.0",
+  "type": "section",
+  "meta": { "id": "hero", "name": "Hero" },
+  "placement": ["page"],
+  "styles": ["hero"],
+  "children": [
+    {
+      "type": "heading",
+      "level": 1,
+      "children": [
+        { "type": "text", "content": { "$bind": "settings.title", "default": "Welcome" } }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        { "type": "text", "content": { "$bind": "settings.description", "default": "" } }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$jtox": "1.0",
+  "type": "layout",
+  "meta": {
+    "id": "default",
+    "name": "Default Layout"
+  },
+  "styles": ["layout-default"],
+  "children": [
+    { "type": "slot", "name": "header" },
+    { "type": "slot", "name": "page" },
+    { "type": "slot", "name": "footer" }
+  ]
+}
