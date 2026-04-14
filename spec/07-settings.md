@@ -314,8 +314,8 @@ setting is the bridge between JTOX templates and live platform data.
 
 | Property | Required | Type | Description |
 |---|---|---|---|
-| `sourceType` | Yes | string | `"collection"`, `"single"`, `"query"` |
-| `entityTypes` | No | array | Allowed entity types: `"product"`, `"content"`, `"custom"` |
+| `sourceType` | Yes | string | `"collection"`, `"single"`, `"query"`, `"menu"` |
+| `entityTypes` | No | array | Allowed entity types: `"product"`, `"content"`, `"custom"`. Not applicable for `sourceType: "menu"`. |
 
 #### How Data Flows: Setting → Editor → Renderer → Template
 
@@ -384,6 +384,7 @@ settings.product_collection.value.collectionId = "uuid-of-summer-sale"
 | `"collection"` | Collection picker | `{ collectionId, collectionName, entityType }` | Array of collection items → `props.{settingKey}` |
 | `"single"` | Entity picker (one item) | `{ entityId, entityType }` | Single entity object → `props.{settingKey}` |
 | `"query"` | Filter builder UI | `{ entityType, filters, sort, limit }` | Query results array → `props.{settingKey}` |
+| `"menu"` | Menu picker | `{ menuId, menuHandle, menuTitle }` | Menu items array → `props.{settingKey}` |
 
 #### Query Source Type
 
@@ -412,6 +413,94 @@ For `sourceType: "query"`, the business owner builds a dynamic query through the
 
 The renderer evaluates the query against the platform's data layer and injects results
 into `props.featured_products`.
+
+#### Menu Source Type
+
+For `sourceType: "menu"`, the business owner picks a navigation menu from the platform's
+menu management system. The renderer resolves the menu and injects its items as an array:
+
+```json
+{
+  "nav_menu": {
+    "type": "datasource",
+    "intent": "data",
+    "label": "Navigation Menu",
+    "description": "Choose which menu to display in this section",
+    "value": null,
+    "sourceType": "menu"
+  }
+}
+```
+
+The `entityTypes` property is not applicable for menu datasources — menus are their own
+entity type.
+
+The business owner selects a menu (e.g., "Main Menu"), and the setting value becomes:
+
+```json
+{
+  "value": {
+    "menuId": "uuid-of-main-menu",
+    "menuHandle": "main-menu",
+    "menuTitle": "Main Menu"
+  }
+}
+```
+
+The renderer resolves the menu and injects its items array into `props.nav_menu`:
+
+```json
+[
+  { "title": "Home", "url": "/", "type": "PAGE", "children": [] },
+  { "title": "Shop", "url": "/collections", "type": "PAGE", "children": [
+    { "title": "New Arrivals", "url": "/collections/new-arrivals", "type": "COLLECTION", "children": [] },
+    { "title": "Sale", "url": "/collections/sale", "type": "COLLECTION", "children": [] }
+  ]}
+]
+```
+
+Each menu item has:
+
+| Field | Type | Description |
+|---|---|---|
+| `title` | string | Display text |
+| `url` | string | Resolved URL (absolute path or external) |
+| `type` | string | Link type (platform-defined, e.g., `PAGE`, `COLLECTION`, `PRODUCT`, `URL`) |
+| `children` | array | Nested child items (same shape, recursive) |
+
+Templates iterate over the menu items using `each` and render nested levels with
+`conditional` + nested `each`:
+
+```json
+{
+  "type": "each",
+  "source": { "$bind": "props.nav_menu" },
+  "as": "item",
+  "children": [
+    {
+      "type": "link",
+      "attributes": { "href": { "$bind": "scope.item.url" } },
+      "children": [{ "type": "text", "content": { "$bind": "scope.item.title" } }]
+    },
+    {
+      "type": "conditional",
+      "test": { "$bind": "scope.item.children" },
+      "children": [{
+        "type": "each",
+        "source": { "$bind": "scope.item.children" },
+        "as": "child",
+        "children": [
+          {
+            "type": "link",
+            "attributes": { "href": { "$bind": "scope.child.url" } },
+            "children": [{ "type": "text", "content": { "$bind": "scope.child.title" } }]
+          }
+        ]
+      }]
+    }
+  ]
+}
+```
 
 #### Entity Types
 

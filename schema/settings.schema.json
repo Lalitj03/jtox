@@ -137,7 +137,7 @@
           "then": {
             "required": ["type", "intent", "label", "value", "sourceType"],
             "properties": {
-              "sourceType": { "type": "string", "enum": ["collection", "single", "query"] },
+              "sourceType": { "type": "string", "enum": ["collection", "single", "query", "menu"] },
               "entityTypes": {
                 "type": "array",
                 "items": { "type": "string", "enum": ["product", "content", "custom"] }
