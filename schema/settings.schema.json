@@ -1,6 +1,6 @@
 {
   "title": "JTOX Settings Schema",
-  "description": "Schema for a JTOX settings file (section, component, or block settings)",
+  "description": "Schema for a JTOX settings file (section or component settings)",
   "type": "object",
   "patternProperties": {
     "^[a-z][a-z0-9_]*$": {

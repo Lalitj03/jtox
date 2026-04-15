@@ -8,7 +8,7 @@ These schemas validate JTOX documents, settings files, and theme metadata.
 |---|---|
 | `node.schema.json` | A single JTOX node (recursive — validates the entire tree) |
 | `bind.schema.json` | A `$bind` object (data binding expression) |
-| `settings.schema.json` | A settings file (section, component, or block settings) |
+| `settings.schema.json` | A settings file (section or component settings) |
 | `theme.schema.json` | A `theme.json` file (theme metadata and global settings) |
 
 ## Usage

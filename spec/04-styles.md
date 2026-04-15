@@ -99,10 +99,8 @@ theme/
 │   └── ...
 ├── sections/{id}/
 │   └── styles.css             # Section-local styles
-├── components/{id}/
-│   └── styles.css             # Component-local styles
-└── blocks/{id}/
-    └── styles.css             # Block-local styles
+└── components/{id}/
+    └── styles.css             # Component-local styles
 ```
 
 The file format (`.css`, `.json`, `.styles`) is renderer-specific. The directory structure

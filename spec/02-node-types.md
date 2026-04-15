@@ -13,7 +13,8 @@ organized into five categories:
 |---|---|---|
 | **Element** | Visible UI elements | `container`, `heading`, `paragraph`, `span`, `link`, `button`, `image`, `video`, `icon`, `list`, `listItem`, `table`, `tableRow`, `tableCell`, `form`, `input`, `select`, `textarea`, `label`, `nav`, `main`, `aside`, `article`, `figure`, `figCaption`, `separator`, `richtext` |
 | **Text** | Text content with formatting | `text` |
-| **Reference** | Includes another template | `component`, `block` |
+| **Reference** | Includes another template | `component` |
+| **Structural** | Named regions within a parent | `block` |
 | **Control** | Rendering flow control | `each`, `conditional`, `slot` |
 | **Root** | Top-level structural units | `section`, `page`, `header`, `footer`, `layout`, `overlay`, `fragment` |
 
@@ -613,27 +614,68 @@ References a reusable UI component.
 | `$ref` | Yes | Path to the component template (theme-relative) |
 | `props` | No | Data to pass to the component's scope |
 
+Components are self-contained widgets with their own settings, styles, and optionally
+scripts. They receive data via `props` from the parent section or component. Components
+are reusable across sections — a `product-card` component can be used by any section
+that displays products.
+
 See [Composition](05-composition.md) for `$ref` resolution rules.
+
+---
+
+## 5a. Structural Nodes
+
+Structural nodes define named regions within a parent template. They do not reference
+external documents — their content is inline.
 
 ### `block`
 
-References a reusable content block. Blocks are smaller than sections, larger than elements.
+A named structural region within a section or component template. Blocks group child
+nodes under a unique `id` that external systems (editors, renderers) can use to identify,
+reorder, or control visibility of template regions.
 
 ```json
 {
   "type": "block",
-  "$ref": "/blocks/testimonial-card",
-  "props": {
-    "quote": { "$bind": "props.testimonial.text" },
-    "author": { "$bind": "props.testimonial.author" }
-  }
+  "id": "price",
+  "meta": { "name": "Price Display" },
+  "children": [
+    {
+      "type": "container",
+      "styles": ["price-display"],
+      "children": [
+        { "type": "text", "content": { "$bind": "props.product.selling_price.unit_amount" } }
+      ]
+    }
+  ]
 }
 ```
 
-**Component vs Block:** Components are self-contained widgets with their own settings
-(e.g., a product card with display options). Blocks are content fragments meant to be
-embedded within sections (e.g., a testimonial quote, a feature highlight). The distinction
-is semantic — renderers treat them identically.
+| Property | Required | Description |
+|---|---|---|
+| `id` | Yes | Unique identifier within the parent template |
+| `meta.name` | Yes | Human-readable name (for tooling/editors) |
+| `children` | Yes | The block's content — standard JTOX nodes |
+
+**Blocks vs Components:** Components are reusable across sections, have their own
+settings/styles/scripts, and are referenced via `$ref` to external template files.
+Blocks are inline structural regions within a parent template — they have no own
+settings, no scripts, no separate files. They inherit their parent's binding scope
+(`props`, `settings`, `state`, `computed`). Blocks are the unit of structural control
+within a section or component.
+
+**Scope:** Blocks do NOT create a new binding scope. `{ "$bind": "props.product.title" }`
+inside a block resolves from the parent section or component's scope, not from any
+block-specific scope.
+
+**Nesting:** Blocks cannot contain other blocks. They contain elements, text, and
+control flow nodes only. If a block needs a component, the component `$ref` should be
+at the section level, not nested inside a block.
+
+**Rendering:** A renderer walks block children the same way it walks any other children
+array. The `id` and `meta.name` are metadata — the renderer MAY use them for
+identification (e.g., injecting `data-block-id` attributes) but MUST render the
+children regardless.
 
 ---
 

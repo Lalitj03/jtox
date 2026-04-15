@@ -37,7 +37,6 @@ Paths are **theme-relative** and use forward slashes:
 
 ```
 /components/{component-id}
-/blocks/{block-id}
 /sections/{section-id}
 /headers/{header-id}
 /footers/{footer-id}
@@ -49,9 +48,11 @@ Paths are **theme-relative** and use forward slashes:
 | Path Segment | Resolves To |
 |---|---|
 | `/components/product-card` | `theme/components/product-card/template.json` |
-| `/blocks/testimonial` | `theme/blocks/testimonial/template.json` |
 | `/sections/hero-banner` | `theme/sections/hero-banner/template.json` |
 | `/overlays/image-viewer` | `theme/overlays/image-viewer/template.json` |
+
+Note: Blocks are NOT referenced via `$ref`. Blocks are inline structural nodes
+within their parent template. See [Node Types §5a](02-node-types.md).
 
 ### Resolution Rules
 
@@ -223,11 +224,17 @@ Layout (outermost, renders <div>)
 
 Section / Overlay
   ├── Elements (container, heading, paragraph, etc.)
-  ├── Block references ($ref to /blocks/*)
+  ├── Blocks (inline named regions — reorderable/toggleable by editors)
   ├── Component references ($ref to /components/*)
   └── Control flow (each, conditional)
 
-Component / Block
+Component
+  ├── Elements
+  ├── Blocks (inline named regions)
+  ├── Text nodes
+  └── Control flow
+
+Block (inline, parent-scoped)
   ├── Elements
   ├── Text nodes
   └── Control flow
@@ -248,9 +255,9 @@ by default and shown via `ui.open` actions. See [Overlays](13-overlays.md).
 | Header | Slots (filled with sections) |
 | Page | Slots (filled with sections) |
 | Footer | Slots (filled with sections) |
-| Section | Elements, blocks, components, control flow |
-| Overlay | Elements, blocks, components, control flow (same as section) |
-| Component | Elements, text, blocks (nested), control flow |
+| Section | Elements, blocks (inline), components ($ref), control flow |
+| Overlay | Elements, blocks (inline), components ($ref), control flow |
+| Component | Elements, blocks (inline), text, control flow |
 | Block | Elements, text, control flow |
 | Element | Elements, text, control flow |
 | Text | Nothing (leaf node) |
@@ -260,7 +267,7 @@ by default and shown via `ui.open` actions. See [Overlays](13-overlays.md).
 | Source | Cannot Reference |
 |---|---|
 | Component | Sections, overlays, pages, layouts |
-| Block | Sections, overlays, pages, layouts, components |
+| Block | Components, sections, overlays, pages, layouts (blocks are inline, no $ref) |
 | Section | Pages, layouts, overlays |
 | Overlay | Pages, layouts, sections, other overlays |
 

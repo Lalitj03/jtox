@@ -31,11 +31,6 @@ A theme contains:
 │       ├── props.json         # Props interface definition (documentation)
 │       ├── styles.css         # Platform-specific styles
 │       └── script.js          # Behavior (optional, see Scripts)
-├── blocks/                    # Reusable content blocks
-│   └── {block-id}/
-│       ├── template.json
-│       ├── settings.json
-│       └── styles.css
 ├── sections/                  # Page sections
 │   └── {section-id}/
 │       ├── template.json
@@ -78,7 +73,7 @@ A theme contains:
 |---|---|---|
 | Theme name | `lowercase-with-hyphens` | `luminous`, `rise-starter` |
 | Component ID | `lowercase-with-hyphens` | `product-card`, `hero-cta` |
-| Block ID | `lowercase-with-hyphens` | `testimonial-quote` |
+| Block ID | `lowercase-with-hyphens` | `price`, `add-to-cart`, `title` |
 | Section ID | `lowercase-with-hyphens` | `product-grid`, `hero-banner` |
 | Overlay ID | `lowercase-with-hyphens` | `image-viewer`, `search-panel` |
 | Page ID | `lowercase-with-hyphens` | `home`, `product`, `landing` |
@@ -420,7 +415,7 @@ settings retain their default values.
 
 ## 7. Props Interface (`props.json`)
 
-Components and blocks can declare their expected props in a `props.json` file:
+Components can declare their expected props in a `props.json` file:
 
 ```json
 {
@@ -447,11 +442,17 @@ The props interface is a documentation and tooling file:
 1. Tells section authors what data to pass to the component
 2. Enables validators to check that parent templates pass required props
 3. Can be used by development tools to generate dummy/preview data
+4. Defines the compatibility contract for swappable components — all components
+   that can fill the same role must accept the same props interface
 
 Props are accessed in templates via `{ "$bind": "props.{key}" }`.
 
 The `props.json` file is optional. Components without it rely on implicit prop
 contracts defined by their `$bind` expressions.
+
+Note: Blocks do NOT have `props.json`. Blocks are inline structural regions that
+inherit their parent's binding scope — they access data via the parent's `props`,
+`settings`, `state`, and `computed` scopes directly.
 
 ---
 
@@ -464,6 +465,8 @@ A valid theme MUST satisfy:
 - All `$ref` paths in templates resolve to existing files
 - No circular references
 - All referenced style identifiers have corresponding style definitions
+- All inline `block` nodes have unique `id` within their parent template
+- All inline `block` nodes have `meta.name`
 
 ### Settings Validation
 - All settings have required properties (`type`, `intent`, `label`, `value`)
@@ -476,8 +479,7 @@ A valid theme MUST satisfy:
 - Layout slots are filled by appropriate content types
 
 ### Cross-Reference Validation
-- Components referenced by sections exist
-- Blocks referenced by components/sections exist
+- Components referenced by sections exist (`$ref` paths resolve)
 - Style identifiers used in templates are defined in style files
 
 ---
