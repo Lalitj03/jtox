@@ -17,11 +17,11 @@
         "list", "listItem", "table", "tableRow", "tableCell",
         "form", "input", "select", "textarea", "label",
         "nav", "main", "aside", "article", "figure", "figCaption",
-        "separator", "fragment",
+        "separator", "richtext", "fragment",
         "text",
         "component", "block",
         "each", "conditional", "slot",
-        "section", "page", "header", "footer", "layout"
+        "section", "page", "header", "footer", "layout", "overlay"
       ],
       "description": "The node type"
     },
@@ -46,6 +46,11 @@
       "type": "array",
       "items": { "type": "object" },
       "description": "Ordered array of child nodes"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Unique identifier within the parent template. Required for block nodes."
     },
     "tag": {
       "type": "string",

@@ -6,7 +6,7 @@
   "properties": {
     "$bind": {
       "type": "string",
-      "pattern": "^(settings|props|scope|theme|context|state|self)\\.",
+      "pattern": "^(settings|props|scope|theme|context|state|computed|self)\\.",
       "description": "Dot-notation path with scope prefix"
     },
     "type": {

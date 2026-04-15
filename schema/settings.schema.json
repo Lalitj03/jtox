@@ -119,7 +119,7 @@
             "properties": {
               "format": {
                 "type": "string",
-                "enum": ["plain", "html", "slate", "markdown", "prosemirror"],
+                "enum": ["plain", "html", "slate", "markdown", "prosemirror", "jtox"],
                 "default": "plain"
               },
               "allowedFormats": {
