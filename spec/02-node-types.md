@@ -13,10 +13,10 @@ organized into five categories:
 |---|---|---|
 | **Element** | Visible UI elements | `container`, `heading`, `paragraph`, `span`, `link`, `button`, `image`, `video`, `icon`, `list`, `listItem`, `table`, `tableRow`, `tableCell`, `form`, `input`, `select`, `textarea`, `label`, `nav`, `main`, `aside`, `article`, `figure`, `figCaption`, `separator`, `richtext` |
 | **Text** | Text content with formatting | `text` |
-| **Reference** | Includes another template | `component` |
+| **Reference** | Includes another template | `component` (with `$ref`) |
 | **Structural** | Named regions within a parent | `block` |
 | **Control** | Rendering flow control | `each`, `conditional`, `slot` |
-| **Root** | Top-level structural units | `section`, `page`, `header`, `footer`, `layout`, `overlay`, `fragment` |
+| **Root** | Top-level structural units | `section`, `component`, `page`, `header`, `footer`, `layout`, `overlay`, `fragment` |
 
 A renderer MUST support all node types in the spec version it claims to implement.
 
@@ -597,7 +597,9 @@ Reference nodes include another JTOX document by path. They are the composition 
 
 ### `component`
 
-References a reusable UI component.
+The `component` type serves two roles:
+
+**As a reference node** (in a parent template) — includes a component template by path:
 
 ```json
 {
@@ -613,6 +615,26 @@ References a reusable UI component.
 |---|---|---|
 | `$ref` | Yes | Path to the component template (theme-relative) |
 | `props` | No | Data to pass to the component's scope |
+
+**As a root node** (in a component template file) — the top-level node of a component:
+
+```json
+{
+  "$jtox": "1.1",
+  "type": "component",
+  "meta": { "id": "product-card", "name": "Product Card" },
+  "styles": ["product-card"],
+  "children": [...]
+}
+```
+
+| Property | Required | Description |
+|---|---|---|
+| `meta.id` | Yes | Component identifier (matches the directory name) |
+| `styles` | No | Style identifiers applied to the component's root element |
+
+**Web mapping:** `<div>` (when used as a root node).
+**Accepts children:** Yes.
 
 Components are self-contained widgets with their own settings, styles, and optionally
 scripts. They receive data via `props` from the parent section or component. Components
